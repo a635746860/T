@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.core.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.fp.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const { _ } = window;
+      const reg = /\[(.+?)]/g;
+      const str =
+        "你好啊,我是[测0]谁谁谁,我喜欢吃香蕉[香1],我吃了[笑2]测试[哈3]测[大4]";
+      const str2 = `[香蕉]`;
+      console.log(str);
+      let covertData = [];
+      let idx = 0;
+      const newStr = str.replace(reg, (...args) => {
+        // idx++;
+        // console.log("y", idx);
+        const realArr = Array.from(args);
+        const targetOffset = realArr.filter(
+          (item) => typeof item === "number"
+        )[0];
+        covertData.push(targetOffset);
+        console.log(targetOffset);
+        return 123;
+      });
+      console.log(newStr);
+      console.log(covertData);
+
+      //第一次是固定的逻辑 str.subStr(0, covertData[0])
+      //covertData[1], 4 判断 if covertData[1] + 4 <
+
+      const test = () => {
+        const res = [];
+        res.push({
+          val: str.substr(0, covertData[0]),
+          idx: 0,
+        });
+        for (let index = 1; index < covertData.length; index++) {
+          if (index === 1) {
+            res.push({
+              val: str.substr(covertData[1], 4),
+              idx: index,
+            });
+          } else {
+            if (covertData[index] + 4 < covertData[index + 1]) {
+              res.push({
+                val: str.substr(covertData[index], 4),
+                idx: index,
+              });
+            } else {
+              res.push({
+                val: str.substr(covertData[index], 4),
+                idx: index,
+              });
+            }
+          }
+        }
+        console.log("res", res);
+      };
+
+      test();
+    </script>
+  </body>
+</html>
